@@ -1,0 +1,34 @@
+<view>
+  <view class="bt-nav" bindtap="goIndex">
+		  蓝牙
+  </view>
+  <view>
+		<button bindtap="searchBlue" type="primary">搜索蓝牙</button> 
+  </view> 
+  <view class="bt-news">
+      <view class="list-item" hidden="{{isHideList}}">
+        <view class="item-box" wx:for="{{devicesList}}" wx:key="index">
+          <text class="bt-name" >设备名称:   {{item.name}}</text>
+          <view class="btn-connection" 
+           data-id="{{item.deviceId}}" 
+           data-name="{{item.name || item.localName}}" bindtap="connectTo">
+                连接
+           </view>
+        </view>
+      </view>
+  </view>
+  <!-- 连接成功 -->
+  <view class="connect-success" hidden="{{isHideConnect}}">
+      <view class="show-news">
+        <text >已连接到：{{connectName}}</text>
+        <!-- <text>{{deviceId}}</text> -->
+      </view>
+      <view class="write-data">
+          <button class="write-btn" size="mini"  bindtap="writeBLECharacteristicValue">写入数据</button>
+      </view>
+      <view class="closeBLEConnection-box">
+          <button class="closeBLEConnection" size="mini"  bindtap="closeBLEConnection">断开连接</button>
+      </view>
+  </view>
+ </view> 
+
