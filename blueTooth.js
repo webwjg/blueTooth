@@ -1,5 +1,4 @@
 // pages/blueTooth/blueTooth.js
-const util=require('../../utils/util')
 Page({
 
 	/**
@@ -188,7 +187,7 @@ searchBlue(){
     });
 
   },
-  writeBLECharacteristicValue(){
+  writeBLECharacteristicValue(){ //页面有个按钮
     // 向蓝牙设备发送的16进制数据
      let that=this;
      let buffer = new ArrayBuffer(8);
@@ -225,9 +224,9 @@ searchBlue(){
         console.log(res);
         wx.onBLECharacteristicValueChange(function (res){
             console.log(res); 
-            let str=util.ab2hex(res.value);
-            that.setData({initializationArr:util.initialization(str)})
-            console.log(util.initialization(str));
+            let str=that.ab2hex(res.value);
+        
+           
         })
       }
     })
@@ -254,6 +253,18 @@ searchBlue(){
    that.closeBluetoothAdapter();
 
  },
+
+    // ArrayBuffer转16进制字符串
+ ab2hex(buffer){
+      var hexArr = Array.prototype.map.call(
+        new Uint8Array(buffer),
+        function (bit) {
+          return ('00' + bit.toString(16)).slice(-2)
+        }
+      )
+      return hexArr.join('');
+},
+ 
  stopBluetoothDevicesDiscovery(){
   wx.stopBluetoothDevicesDiscovery({
     success (res) {
